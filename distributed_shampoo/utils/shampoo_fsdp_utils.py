@@ -62,7 +62,6 @@ def compile_fsdp_parameter_metadata(
                 shapes,
                 numels,
                 shard_param_infos,
-                strict=True,
             )
         }
 

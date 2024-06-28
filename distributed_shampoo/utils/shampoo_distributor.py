@@ -168,7 +168,6 @@ class DistributorInterface(ABC):
             self._global_merged_dims_list,
             self._global_num_blocks_per_param,
             generate_pairwise_indices(self._global_num_blocks_per_param),
-            strict=True,
         ):
             grad = param.grad
             param_distributor_selector = self._distributor_selector[
@@ -256,7 +255,6 @@ class Distributor(DistributorInterface):
             for ((param_index, param), num_blocks_within_param) in zip(
                 enumerate(self._param_group[PARAMS]),
                 self._global_num_blocks_per_param,
-                strict=True,
             )
             for block_index in range(num_blocks_within_param)
         )

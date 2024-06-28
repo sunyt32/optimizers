@@ -170,7 +170,7 @@ class AdagradPreconditionerList(PreconditionerList):
         # This is because the optimizer state is defined per-parameter, but AdagradPreconditionerList is defined
         # across each parameter group (which includes multiple parameters).
         preconditioner_list = []
-        for block, block_info in zip(block_list, block_info_list, strict=True):
+        for block, block_info in zip(block_list, block_info_list):
             param_index, block_index = block_info.composable_block_ids
             if block_index not in state[block_info.param]:
                 state[block_info.param][block_index] = {}
@@ -343,7 +343,7 @@ class ShampooPreconditionerList(PreconditionerList):
         # across each parameter group (which includes multiple parameters).
         kronecker_factors_list = []
         for block, block_info, dims in zip(
-            block_list, block_info_list, self._dims_list, strict=True
+            block_list, block_info_list, self._dims_list
         ):
             param_index, block_index = block_info.composable_block_ids
             if block_index not in state[block_info.param]:
@@ -479,7 +479,6 @@ class ShampooPreconditionerList(PreconditionerList):
                 masked_grad_list,
                 self._masked_order_list,
                 self._masked_kronecker_factors_list,
-                strict=True,
             ):
                 # Scale Kronecker factors as a list.
                 if self._beta2 != 1.0:
@@ -528,7 +527,7 @@ class ShampooPreconditionerList(PreconditionerList):
                     inv_factor_matrices=kronecker_factors.inv_factor_matrices,
                 )
                 for masked_grad, kronecker_factors in zip(
-                    masked_grad_list, self._masked_kronecker_factors_list, strict=True
+                    masked_grad_list, self._masked_kronecker_factors_list
                 )
             )
 
@@ -544,7 +543,6 @@ class ShampooPreconditionerList(PreconditionerList):
             for kronecker_factors, root in zip(
                 self._local_kronecker_factors_list,
                 self._local_root_list,
-                strict=True,
             ):
                 for (
                     factor_matrix,
@@ -556,7 +554,6 @@ class ShampooPreconditionerList(PreconditionerList):
                     kronecker_factors.inv_factor_matrices,
                     kronecker_factors.is_factor_matrices_diagonal,
                     kronecker_factors.factor_matrix_indices,
-                    strict=True,
                 ):
                     # For tracking diagonality of the preconditioner.
                     # Checks if the preconditioner is currently diagonal, then checks whether or not
@@ -657,12 +654,10 @@ class ShampooPreconditionerList(PreconditionerList):
         for kronecker_factors, root in zip(
             self._masked_kronecker_factors_list,
             self._masked_root_list,
-            strict=True,
         ):
             for factor_matrix, inv_factor_matrix in zip(
                 kronecker_factors.factor_matrices,
                 kronecker_factors.inv_factor_matrices,
-                strict=True,
             ):
                 bias_corrected_factor_matrix = factor_matrix / self._bias_correction2
                 (

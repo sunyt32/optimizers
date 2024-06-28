@@ -314,12 +314,10 @@ class DDPDistributor(DistributorInterface):
                 enumerate(self._param_group[PARAMS]),
                 self._global_num_blocks_per_param,
                 generate_pairwise_indices(self._global_num_blocks_per_param),
-                strict=True,
             )
             for block_index, (_, group_source_rank) in zip(
                 range(num_blocks_within_param),
                 buffer_size_ranks[buffer_size_ranks_start:buffer_size_ranks_end],
-                strict=True,
             )
         )
 
@@ -429,7 +427,7 @@ class DDPDistributor(DistributorInterface):
             .view(self._communication_dtype)
             .view(blocked_param.shape)
             for buffer, blocked_param in zip(
-                splitted_local_dist_buffers, self._global_blocked_params, strict=True
+                splitted_local_dist_buffers, self._global_blocked_params
             )
         )
         self._local_dist_blocked_buffers = compress_list(
