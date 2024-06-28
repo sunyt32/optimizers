@@ -364,7 +364,7 @@ class ShampooPreconditionerList(PreconditionerList):
             inv_factor_matrices = tuple(
                 block_info.allocate_zeros_tensor(
                     (dim, dim),
-                    block.dtype,
+                    torch.float,
                     block_info.param.device,
                 )
                 for dim in dims
