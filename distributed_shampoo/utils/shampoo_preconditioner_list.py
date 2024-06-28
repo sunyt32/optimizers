@@ -179,7 +179,7 @@ class AdagradPreconditionerList(PreconditionerList):
             # Instantiate AdaGrad optimizer state for this block.
             preconditioner_index = str(param_index) + "." + str(block_index)
             block_state[ADAGRAD] = block_info.allocate_zeros_tensor(
-                block.size(), block.dtype, block.device
+                block.size(), torch.float, block.device
             )
             preconditioner_list.append(block_info.get_tensor(block_state[ADAGRAD]))
 

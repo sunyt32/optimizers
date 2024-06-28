@@ -169,7 +169,7 @@ class DistributorInterface(ABC):
             self._global_num_blocks_per_param,
             generate_pairwise_indices(self._global_num_blocks_per_param),
         ):
-            grad = param.grad
+            grad = param.grad.float() if param.grad is not None else None
             param_distributor_selector = self._distributor_selector[
                 block_index:next_block_index
             ]

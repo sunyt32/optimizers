@@ -198,7 +198,7 @@ class FSDPDistributor(DistributorInterface):
             generate_pairwise_indices(self._global_num_blocks_per_param),
             generate_pairwise_indices(self._global_num_splits_per_param),
         ):
-            flattened_grad = flattened_param.grad
+            flattened_grad = flattened_param.grad.float() if flattened_param.grad is not None else None
             param_distributor_selector = self._distributor_selector[
                 block_index:next_block_index
             ]
