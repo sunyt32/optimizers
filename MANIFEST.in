@@ -1,0 +1,2 @@
+include distributed_shampoo/*.py  
+recursive-include distributed_shampoo *.py  
